@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import gzip
-import io
 
 def baseSim(myRatings):
     simCandidates = pd.Series()
@@ -17,10 +16,10 @@ def baseSim(myRatings):
 
 # Load the data
 r_cols = ['user_id', 'movie_id', 'rating']
-ratings = pd.read_csv(gzip.open('u.data.gz'), sep='\t', names=r_cols, usecols=range(3), encoding="ISO-8859-1")
+ratings = pd.read_csv(gzip.open('../data/u.data.gz'), sep='\t', names=r_cols, usecols=range(3), encoding="ISO-8859-1")
 
 m_cols = ['movie_id', 'title']
-movies = pd.read_csv(gzip.open('u.item.gz'), sep='|', names=m_cols, usecols=range(2), encoding="ISO-8859-1")
+movies = pd.read_csv(gzip.open('../data/u.item.gz'), sep='|', names=m_cols, usecols=range(2), encoding="ISO-8859-1")
 
 # Merge data sources
 ratings = pd.merge(movies, ratings)
@@ -33,7 +32,7 @@ print('UserRatings:')
 print(userRatings.head())
 
 # Create correlation table
-corrMatrix = userRatings.corr(method='pearson', min_periods=100)
+corrMatrix = userRatings.corr(method='pearson', min_periods=75)
 print('UserRating Correlation:')
 print(corrMatrix.head())
 
